@@ -15,6 +15,7 @@
 #include"ExplosionObject.h"
 #include"TextObject.h"
 #include"FlyObject.h"
+#include"SDL_mixer.h"
 
 BaseObject menu;
 BaseObject g_background;
@@ -120,15 +121,15 @@ std::vector<FlyObject*> MakeFlyThreatsList()
 {
 	std::vector<FlyObject*> list_flythreats;
 
-	FlyObject* dynamic_threats = new FlyObject[5];
-	for (int i = 0; i < 5; i++)
+	FlyObject* dynamic_threats = new FlyObject[8];
+	for (int i = 0; i < 8; i++)
 	{
 		FlyObject* p_threat = (dynamic_threats + i);
 		if (p_threat != NULL)
 		{
 			p_threat->LoadImg("img//fly_left.png", g_screen);
 			p_threat->set_clips();
-			p_threat->set_x_pos(i * 2000 + 1600);
+			p_threat->set_x_pos(i * 1500 + 1600);
 			p_threat->set_y_pos(50);
 			BulletObject* p_bullet = new BulletObject();
 			p_threat->InitBullet(p_bullet, g_screen);
@@ -209,6 +210,11 @@ int main(int argc, char* argv[])
 
 	if (LoadBackgroundMenu() == false)
 		return -1;
+
+	Mix_Music* g_music = Mix_LoadMUS("sound//music.mp3");
+	if (g_music == NULL)
+		return -1;
+	Mix_PlayMusic(g_music, -1);
 
 	GameMap game_map;
 	game_map.LoadMap("map//map01.dat");
@@ -299,7 +305,6 @@ int main(int argc, char* argv[])
 			SDL_GetMouseState(&mouseX, &mouseY);
 
 			start_button.SetText("START");
-			guide_button.SetText("GUIDE");
 			quit_button.SetText("QUIT");
 
 			start_button.LoadFromRenderText(font_menu, g_screen);
@@ -326,16 +331,7 @@ int main(int argc, char* argv[])
 
 			start_button.RenderText(g_screen, 1280 / 2 - 40, 480 / 2);
 
-			guide_button.LoadFromRenderText(font_menu, g_screen);
-			if (mouseX >= 1280 / 2 - 40 && mouseX <= 1280 / 2 - 40 + 90 && mouseY >= 480 / 2 - 15 + 50 && mouseY <= 480 / 2 + 37 - 15 + 50) {
-				guide_button.SetColor(TextObject::YELLOW_TEXT);
-
-			}
-			else {
-				guide_button.SetColor(TextObject::RED_TEXT);
-			}
-			guide_button.RenderText(g_screen, 1280 / 2 - 40 + 2, 480 / 2 + 56);
-
+		
 			quit_button.LoadFromRenderText(font_menu, g_screen);
 			if (mouseX >= 1280 / 2 - 40 && mouseX <= 1280 / 2 - 40 + 90 && mouseY >= 480 / 2 - 15 + 120 && mouseY <= 480 / 2 + 37 - 15 + 120) {
 				quit_button.SetColor(TextObject::YELLOW_TEXT);
@@ -762,7 +758,9 @@ int main(int argc, char* argv[])
 			}
 		}
 	}
-
+	Mix_HaltMusic();
+	Mix_FreeMusic(g_music);
+	Mix_CloseAudio();
 
 	close();
 	return 0;

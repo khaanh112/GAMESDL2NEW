@@ -8,17 +8,17 @@ C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\CommonFunc.h(68,2): warning C4091: 'type
 C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\MainObject.h(52,33): warning C4244: 'return': conversion from 'const float' to 'int', possible loss of data
   (compiling source file 'main.cpp')
   
-C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(131,33): warning C4244: 'argument': conversion from 'int' to 'const float', possible loss of data
-C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(154,32): warning C4244: 'argument': conversion from 'int' to 'const float', possible loss of data
-C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(157,13): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(132,33): warning C4244: 'argument': conversion from 'int' to 'const float', possible loss of data
+C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(155,32): warning C4244: 'argument': conversion from 'int' to 'const float', possible loss of data
 C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(158,13): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(174,33): warning C4244: 'argument': conversion from 'int' to 'const float', possible loss of data
-C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(467,19): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(468,19): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(564,19): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(565,19): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(620,19): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(621,19): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(669,19): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(670,19): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(159,13): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(175,33): warning C4244: 'argument': conversion from 'int' to 'const float', possible loss of data
+C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(463,19): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(464,19): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(560,19): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(561,19): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(616,19): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(617,19): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(665,19): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(666,19): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
   GAME_SDL2.vcxproj -> C:\Users\PC\Desktop\GAME_SDL2\x64\Debug\GAME_SDL2.exe

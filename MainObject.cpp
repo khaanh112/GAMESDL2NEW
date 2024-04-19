@@ -96,27 +96,6 @@ void MainObject::set_clips() {
 		frame_clip_[7].w = width_frame_;
 		frame_clip_[7].h = height_frame_;
 
-		//	frame_clip_[8].x = 8*width_frame_;
-		//	frame_clip_[8].y = 0;
-		//	frame_clip_[8].w = width_frame_;
-		//	frame_clip_[8].h = height_frame_;
-
-		//	frame_clip_[9].x = 9*width_frame_;
-		//	frame_clip_[9].y = 0;
-		//	frame_clip_[9].w = width_frame_;
-		//	frame_clip_[9].h = height_frame_;
-
-		//	frame_clip_[10].x = 10*width_frame_;
-		//	frame_clip_[10].y = 0;
-		//	frame_clip_[10].w = width_frame_;
-		//	frame_clip_[10].h = height_frame_;
-
-		//	frame_clip_[11].x = 11*width_frame_;
-		//	frame_clip_[11].y = 0;
-		//	frame_clip_[11].w = width_frame_;
-		//	frame_clip_[11].h = height_frame_;
-
-
 	}
 }
 
