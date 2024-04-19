@@ -251,7 +251,6 @@ void MainObject::HandleBullet(SDL_Renderer* des) {
 				if (p_bullet->get_type_bullet() == 2) {
 					int mouse_x, mouse_y;
 					SDL_GetMouseState(&mouse_x, &mouse_y);
-
 					p_bullet->SetDirection(mouse_x, mouse_y);
 					p_bullet->LoadImg1("img//bullet_2.png", des);
 					p_bullet->Show(des);

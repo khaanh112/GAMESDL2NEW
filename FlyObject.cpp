@@ -130,7 +130,7 @@ void FlyObject::InitThreats()
 	{
 		x_pos_ = 0;
 	}
-	y_pos_ = 50;
+	y_pos_ = 30;
 
 
 }
@@ -154,7 +154,7 @@ void FlyObject::SetBulletRect(const int& idx)
 {
 
 	BulletObject* p_bullet = bullet_list_.at(idx);
-	p_bullet->SetRect(rect_.x + 20, rect_.y + 10);
+	p_bullet->SetRect(rect_.x + 20, rect_.y + 50);
 
 
 }
@@ -202,7 +202,7 @@ void FlyObject::MakeBullet(SDL_Renderer* screen, const int& x_limit, const int& 
 			else
 			{
 				p_bullet->set_is_move(true);
-				p_bullet->SetRect(rect_.x + 20, rect_.y + 10);
+				p_bullet->SetRect(rect_.x + 20, rect_.y + 20);
 
 				SDL_Rect main_object_position = player;
 

@@ -248,6 +248,7 @@ int main(int argc, char* argv[])
 	TextObject start_button;
 	TextObject guide_button;
 	TextObject quit_button;
+	TextObject continue_button;
 
 	bool is_menu = true;
 	bool start = true;
@@ -255,7 +256,9 @@ int main(int argc, char* argv[])
 	bool time = false;
 	bool tmp_time = false;
 	bool is_quit = false;
+	bool pause_menu = false;
 	Uint32 time_menu = 0;
+	Uint32 time_pause = 0;
 	SDL_Texture* gBackgroundTexture = menu.GetObject();
 	SDL_Texture* tien = loadTexture(g_screen, "img//tien.png");
 	SDL_Texture* mau = loadTexture(g_screen, "img//mau1.png");
@@ -285,15 +288,11 @@ int main(int argc, char* argv[])
 				{
 					is_quit = true;
 				}
-				p_player.HandleInputAction(g_event, g_screen, g_sound_bullet);
-
 			}
 
 			SDL_Rect backgroundRect = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
 			//SDL_SetTextureBlendMode(gBackgroundTexture, SDL_BLENDMODE_MOD);
 			SDL_RenderCopy(g_screen, gBackgroundTexture, NULL, &backgroundRect);
-
-			//renderStart(new_texture);
 
 
 			int mouseX, mouseY;
@@ -344,6 +343,72 @@ int main(int argc, char* argv[])
 					if (g_event.button.button == SDL_BUTTON_LEFT)
 					{
 						is_quit = true;
+						is_menu = false;
+					}
+				}
+			}
+			else {
+				quit_button.SetColor(TextObject::RED_TEXT);
+			}
+			quit_button.RenderText(g_screen, 1280 / 2 - 40 + 5, 480 / 2 + 114);
+
+			SDL_RenderPresent(g_screen);
+			SDL_Delay(100);
+		}
+		if (g_event.type == SDL_KEYDOWN) {
+			if (g_event.key.keysym.sym == SDLK_ESCAPE) {
+				time_pause = SDL_GetTicks() / 1000;
+				pause_menu = true;
+				time = false;
+			}
+		}
+		while (pause_menu)
+		{
+
+			while (SDL_PollEvent(&g_event) != 0)
+			{
+				if (g_event.type == SDL_QUIT)
+				{
+					is_quit = true;
+				}
+			}
+
+			SDL_Rect backgroundRect = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
+			SDL_RenderCopy(g_screen, gBackgroundTexture, NULL, &backgroundRect);
+
+			int mouseX, mouseY;
+			SDL_GetMouseState(&mouseX, &mouseY);
+
+			continue_button.SetText("CONTINUE");
+			quit_button.SetText("QUIT");
+
+			continue_button.LoadFromRenderText(font_menu, g_screen);
+			if (mouseX >= 1280 / 2 - 50 && mouseX <= 1280 / 2 - 40 + 130 && mouseY >= 480 / 2 +40 && mouseY <= 480 / 2 + 37 + 40) {
+				continue_button.SetColor(TextObject::YELLOW_TEXT);
+				if (g_event.type == SDL_MOUSEBUTTONDOWN) {
+					if (g_event.button.button == SDL_BUTTON_LEFT)
+					{
+						pause_menu = false;
+						time_pause = SDL_GetTicks() / 1000 - time_pause;
+						
+					}
+				}
+			}
+			else {
+
+				continue_button.SetColor(TextObject::RED_TEXT);
+			}
+			continue_button.RenderText(g_screen, 1280 / 2 - 60, 480 /2 + 50);
+
+
+			quit_button.LoadFromRenderText(font_menu, g_screen);
+			if (mouseX >= 1280 / 2 - 40 && mouseX <= 1280 / 2 - 40 + 90 && mouseY >= 480 / 2 - 15 + 120 && mouseY <= 480 / 2 + 37 - 15 + 120) {
+				quit_button.SetColor(TextObject::YELLOW_TEXT);
+				if (g_event.type == SDL_MOUSEBUTTONDOWN) {
+					if (g_event.button.button == SDL_BUTTON_LEFT)
+					{
+						is_quit = true;
+						pause_menu = false;
 					}
 				}
 			}
@@ -622,16 +687,18 @@ int main(int argc, char* argv[])
 		//show game time
 		std::string str_time = "Time: ";
 		Uint32 time_val = SDL_GetTicks() / 1000;
-		Uint32 val_time = 200 - time_val + time_menu;
+		Uint32 val_time = 200 - time_val + time_menu + time_pause;
 
 		if ( val_time< 0 || heal < 1)
 		{
+			
 			if (MessageBox(NULL, L"GAME OVER", L"Info", MB_OK | MB_ICONSTOP) == IDOK)
 			{
 
 				is_quit = true;
 				break;
 			}
+			
 		}
 		else
 		{
@@ -684,7 +751,7 @@ int main(int argc, char* argv[])
 			if (delay_time >= 0)
 				SDL_Delay(delay_time);
 		}
-		std::cout << p_player.get_x_pos()<<" ";
+		
 		if (p_player.get_x_pos() >= game_map.get_max_map()-600)
 		{
 			if (MessageBox(NULL, L"VICTORY", L"Info", MB_OK | MB_ICONSTOP) == IDOK)
