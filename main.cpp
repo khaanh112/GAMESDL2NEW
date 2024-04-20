@@ -16,6 +16,7 @@
 #include"TextObject.h"
 #include"FlyObject.h"
 #include"SDL_mixer.h"
+#include<fstream>
 
 BaseObject menu;
 BaseObject g_background;
@@ -210,7 +211,26 @@ SDL_Texture* loadTexture(SDL_Renderer* renderer, const char* filePath) {
 	SDL_FreeSurface(surface);
 	return texture;
 }
+int getHighScore() {
+	std::ifstream file("highscore.txt");
+	int highScore = 0;
+	if (file) {
+		file >> highScore;
+		file.close();
+	}
+	return highScore;
+}
 
+void updateHighScore(int score) {
+	int highScore = getHighScore();
+	if (score > highScore) {
+		std::ofstream file("highscore.txt");
+		if (file) {
+			file << score;
+			file.close();
+		}
+	}
+}
 
 
 int main(int argc, char* argv[])
@@ -265,15 +285,16 @@ int main(int argc, char* argv[])
 
 	//time
 	TextObject time_game;
-	time_game.SetColor(TextObject::WHITE_TEXT);
+	time_game.SetColor(TextObject::BLACK_TEXT);
 
 	TextObject money_countt;
 	money_countt.SetColor(TextObject::YELLOW_TEXT);
 
+	TextObject high_score;
 	TextObject start_button;
-	TextObject guide_button;
 	TextObject quit_button;
 	TextObject continue_button;
+	TextObject your_score;
 
 	bool is_menu = true;
 	bool start = true;
@@ -294,6 +315,7 @@ int main(int argc, char* argv[])
 	
 	while (!is_quit)
 	{
+		int score = 0;
 		int heal = p_player.get_health();
 		fps_timer.start();
 
@@ -327,6 +349,7 @@ int main(int argc, char* argv[])
 			int mouseX, mouseY;
 			SDL_GetMouseState(&mouseX, &mouseY);
 
+			high_score.SetText("HIGHEST SCORE: " + std::to_string(getHighScore()));
 			start_button.SetText("START");
 			quit_button.SetText("QUIT");
 
@@ -351,8 +374,17 @@ int main(int argc, char* argv[])
 
 				start_button.SetColor(TextObject::RED_TEXT);
 			}
-
 			start_button.RenderText(g_screen, 1280 / 2 - 50, 480 / 2 + 50);
+			high_score.LoadFromRenderText(font_menu, g_screen);
+			if (mouseX >= 1280 / 2 -100 && mouseX <= 1280 / 2 - 40 + 300 && mouseY >= 480 / 2  && mouseY <= 480 / 2 + 37 ) {
+				high_score.SetColor(TextObject::YELLOW_TEXT);
+			}
+			else {
+
+				high_score.SetColor(TextObject::RED_TEXT);
+			}
+
+			high_score.RenderText(g_screen, 1280 / 2 - 100, 480 / 2 + 10);
 
 		
 			quit_button.LoadFromRenderText(font_menu, g_screen);
@@ -418,6 +450,16 @@ int main(int argc, char* argv[])
 				continue_button.SetColor(TextObject::RED_TEXT);
 			}
 			continue_button.RenderText(g_screen, 1280 / 2 - 60, 480 /2 + 50);
+			high_score.LoadFromRenderText(font_menu, g_screen);
+			if (mouseX >= 1280 / 2 - 100 && mouseX <= 1280 / 2 - 40 + 300 && mouseY >= 480 / 2 && mouseY <= 480 / 2 + 37) {
+				high_score.SetColor(TextObject::YELLOW_TEXT);
+			}
+			else {
+
+				high_score.SetColor(TextObject::RED_TEXT);
+			}
+
+			high_score.RenderText(g_screen, 1280 / 2 - 100, 480 / 2 + 10);
 
 
 			quit_button.LoadFromRenderText(font_menu, g_screen);
@@ -746,6 +788,16 @@ int main(int argc, char* argv[])
 					quit_button.SetColor(TextObject::RED_TEXT);
 				}
 				quit_button.RenderText(g_screen, 1280 / 2 - 40 + 5, 480 / 2 + 114);
+				high_score.LoadFromRenderText(font_menu, g_screen);
+				if (mouseX >= 1280 / 2 - 100 && mouseX <= 1280 / 2 - 40 + 300 && mouseY >= 480 / 2 && mouseY <= 480 / 2 + 37) {
+					high_score.SetColor(TextObject::YELLOW_TEXT);
+				}
+				else {
+
+					high_score.SetColor(TextObject::BLACK_TEXT);
+				}
+
+				high_score.RenderText(g_screen, 1280 / 2 - 100, 480 / 2 + 10);
 
 				SDL_RenderPresent(g_screen);
 				SDL_Delay(100);
@@ -806,6 +858,9 @@ int main(int argc, char* argv[])
 		if (p_player.get_x_pos() >= game_map.get_max_map()-600)
 		{
 			w_menu = true;
+			score = money_count + 200 - time_val + heal * 10;
+			std::cout << score << " ";
+			updateHighScore(score);
 			while (w_menu)
 			{
 
@@ -841,6 +896,27 @@ int main(int argc, char* argv[])
 					quit_button.SetColor(TextObject::RED_TEXT);
 				}
 				quit_button.RenderText(g_screen, 1280 / 2 - 40 + 5, 480 / 2 + 114);
+				high_score.LoadFromRenderText(font_menu, g_screen);
+				if (mouseX >= 1280 / 2 - 100 && mouseX <= 1280 / 2 - 40 + 300 && mouseY >= 480 / 2 && mouseY <= 480 / 2 + 37) {
+					high_score.SetColor(TextObject::YELLOW_TEXT);
+				}
+				else {
+
+					high_score.SetColor(TextObject::RED_TEXT);
+				}
+
+				high_score.RenderText(g_screen, 1280 / 2 - 100, 480 / 2 + 10);
+				your_score.SetText("YOUR SCORE: " + std::to_string(score));
+				your_score.LoadFromRenderText(font_menu, g_screen);
+				if (mouseX >= 1280 / 2 - 100 && mouseX <= 1280 / 2 - 40 + 230 && mouseY >= 480 / 2 +40 && mouseY <= 480 / 2 + 37 +40) {
+					your_score.SetColor(TextObject::YELLOW_TEXT);
+				}
+				else {
+
+					your_score.SetColor(TextObject::RED_TEXT);
+				}
+
+				your_score.RenderText(g_screen, 1280 / 2 - 100, 480 / 2 + 50);
 
 				SDL_RenderPresent(g_screen);
 				SDL_Delay(100);
