@@ -19,6 +19,8 @@
 
 BaseObject menu;
 BaseObject g_background;
+BaseObject lose_menu;
+BaseObject win_menu;
 TTF_Font* font_time = NULL;
 TTF_Font* font_menu = NULL;
 
@@ -91,6 +93,20 @@ bool LoadBackgroundMenu()
 
 	return true;
 
+}
+bool LoadBackgroundWin()
+{
+	bool ret = win_menu.LoadImg("img//win_menu.png", g_screen);
+	if (ret == false)
+		return false;
+	return true;
+}
+bool LoadBackgoundLose()
+{
+	bool ret = lose_menu.LoadImg("img//lose_menu.png", g_screen);
+	if (ret == false)
+		return false;
+	return true;
 }
 
 bool LoadBackground()
@@ -210,7 +226,10 @@ int main(int argc, char* argv[])
 
 	if (LoadBackgroundMenu() == false)
 		return -1;
-
+	if (LoadBackgoundLose() == false)
+		return -1;
+	if (LoadBackgroundWin() == false)
+		return -1;
 	Mix_Music* g_music = Mix_LoadMUS("sound//music.mp3");
 	if (g_music == NULL)
 		return -1;
@@ -263,9 +282,13 @@ int main(int argc, char* argv[])
 	bool tmp_time = false;
 	bool is_quit = false;
 	bool pause_menu = false;
+	bool l_menu = false;
+	bool w_menu = false;
 	Uint32 time_menu = 0;
 	Uint32 time_pause = 0;
 	SDL_Texture* gBackgroundTexture = menu.GetObject();
+	SDL_Texture* Backgoundlose = lose_menu.GetObject();
+	SDL_Texture* Backgoundwin = win_menu.GetObject();
 	SDL_Texture* tien = loadTexture(g_screen, "img//tien.png");
 	SDL_Texture* mau = loadTexture(g_screen, "img//mau1.png");
 	
@@ -308,7 +331,7 @@ int main(int argc, char* argv[])
 			quit_button.SetText("QUIT");
 
 			start_button.LoadFromRenderText(font_menu, g_screen);
-			if (mouseX >= 1280 / 2 - 40 && mouseX <= 1280 / 2 - 40 + 90 && mouseY >= 480 / 2 - 15 && mouseY <= 480 / 2 + 37 - 15) {
+			if (mouseX >= 1280 / 2 - 50 && mouseX <= 1280 / 2 - 40 + 130 && mouseY >= 480 / 2 + 40 && mouseY <= 480 / 2 + 37 + 40) {
 				start_button.SetColor(TextObject::YELLOW_TEXT);
 				if (g_event.type == SDL_MOUSEBUTTONDOWN) {
 					if (g_event.button.button == SDL_BUTTON_LEFT)
@@ -329,7 +352,7 @@ int main(int argc, char* argv[])
 				start_button.SetColor(TextObject::RED_TEXT);
 			}
 
-			start_button.RenderText(g_screen, 1280 / 2 - 40, 480 / 2);
+			start_button.RenderText(g_screen, 1280 / 2 - 50, 480 / 2 + 50);
 
 		
 			quit_button.LoadFromRenderText(font_menu, g_screen);
@@ -355,7 +378,7 @@ int main(int argc, char* argv[])
 			if (g_event.key.keysym.sym == SDLK_ESCAPE) {
 				time_pause = SDL_GetTicks() / 1000;
 				pause_menu = true;
-				time = false;
+				
 			}
 		}
 		while (pause_menu)
@@ -685,16 +708,48 @@ int main(int argc, char* argv[])
 		Uint32 time_val = SDL_GetTicks() / 1000;
 		Uint32 val_time = 200 - time_val + time_menu + time_pause;
 
-		if ( val_time< 0 || heal < 1)
+		if ( val_time<= 0 || heal < 1)
 		{
-			
-			if (MessageBox(NULL, L"GAME OVER", L"Info", MB_OK | MB_ICONSTOP) == IDOK)
+			l_menu = true;
+			while (l_menu)
 			{
 
-				is_quit = true;
-				break;
-			}
+				while (SDL_PollEvent(&g_event) != 0)
+				{
+					if (g_event.type == SDL_QUIT)
+					{
+						is_quit = true;
+					}
+				}
+
+				SDL_Rect backgroundRect = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
+				SDL_RenderCopy(g_screen, Backgoundlose, NULL, &backgroundRect);
+
+				int mouseX, mouseY;
+				SDL_GetMouseState(&mouseX, &mouseY);
+
 			
+				quit_button.SetText("QUIT");
+
+				quit_button.LoadFromRenderText(font_menu, g_screen);
+				if (mouseX >= 1280 / 2 - 40 && mouseX <= 1280 / 2 - 40 + 90 && mouseY >= 480 / 2 - 15 + 120 && mouseY <= 480 / 2 + 37 - 15 + 120) {
+					quit_button.SetColor(TextObject::YELLOW_TEXT);
+					if (g_event.type == SDL_MOUSEBUTTONDOWN) {
+						if (g_event.button.button == SDL_BUTTON_LEFT)
+						{
+							is_quit = true;
+							l_menu = false;
+						}
+					}
+				}
+				else {
+					quit_button.SetColor(TextObject::RED_TEXT);
+				}
+				quit_button.RenderText(g_screen, 1280 / 2 - 40 + 5, 480 / 2 + 114);
+
+				SDL_RenderPresent(g_screen);
+				SDL_Delay(100);
+			}
 		}
 		else
 		{
@@ -750,11 +805,45 @@ int main(int argc, char* argv[])
 		
 		if (p_player.get_x_pos() >= game_map.get_max_map()-600)
 		{
-			if (MessageBox(NULL, L"VICTORY", L"Info", MB_OK | MB_ICONSTOP) == IDOK)
+			w_menu = true;
+			while (w_menu)
 			{
 
-				is_quit = true;
-				break;
+				while (SDL_PollEvent(&g_event) != 0)
+				{
+					if (g_event.type == SDL_QUIT)
+					{
+						is_quit = true;
+					}
+				}
+
+				SDL_Rect backgroundRect = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
+				SDL_RenderCopy(g_screen, Backgoundwin, NULL, &backgroundRect);
+
+				int mouseX, mouseY;
+				SDL_GetMouseState(&mouseX, &mouseY);
+
+
+				quit_button.SetText("QUIT");
+
+				quit_button.LoadFromRenderText(font_menu, g_screen);
+				if (mouseX >= 1280 / 2 - 40 && mouseX <= 1280 / 2 - 40 + 90 && mouseY >= 480 / 2 - 15 + 120 && mouseY <= 480 / 2 + 37 - 15 + 120) {
+					quit_button.SetColor(TextObject::YELLOW_TEXT);
+					if (g_event.type == SDL_MOUSEBUTTONDOWN) {
+						if (g_event.button.button == SDL_BUTTON_LEFT)
+						{
+							is_quit = true;
+							w_menu = false;
+						}
+					}
+				}
+				else {
+					quit_button.SetColor(TextObject::RED_TEXT);
+				}
+				quit_button.RenderText(g_screen, 1280 / 2 - 40 + 5, 480 / 2 + 114);
+
+				SDL_RenderPresent(g_screen);
+				SDL_Delay(100);
 			}
 		}
 	}

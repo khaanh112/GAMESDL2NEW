@@ -4,7 +4,7 @@
 #define THREAT_FRAME_NUM 8
 #define THREAT_GRAVITY_SPEED 0.8
 #define MAX_FALL_SPEED 10
-#define THREAT_SPEED 5
+#define THREAT_SPEED 8
 #include"CommonFunc.h"
 #include"BaseObject.h"
 #include"BulletObject.h"
