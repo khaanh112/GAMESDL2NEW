@@ -79,6 +79,8 @@ bool InitData()
 			g_sound_exp[0] = Mix_LoadWAV("sound//hitted.wav");
 			g_sound_exp[1] = Mix_LoadWAV("sound//explosion.wav");
 			g_sound_exp[2] = Mix_LoadWAV("sound//money.wav");
+			g_sound_exp[3] = Mix_LoadWAV("sound//ronggam.wav");
+			g_sound_exp[4] = Mix_LoadWAV("sound//spider.wav");
 			if (g_sound_exp[0] == NULL || g_sound_bullet[0] == NULL || g_sound_bullet[1] == NULL || g_sound_exp[1] == NULL)
 				return false;
 	}
@@ -148,6 +150,8 @@ std::vector<FlyObject*> MakeFlyThreatsList()
 			p_threat->set_clips();
 			p_threat->set_x_pos(i * 1500 + 1600);
 			p_threat->set_y_pos(50);
+			p_threat->set_max_blood(3);
+			p_threat->set_blood(3);
 			BulletObject* p_bullet = new BulletObject();
 			p_threat->InitBullet(p_bullet, g_screen);
 			list_flythreats.push_back(p_threat);
@@ -171,6 +175,8 @@ std::vector<ThreatsObject*> MakeThreatsList()
 			p_threat->set_type_move(ThreatsObject::MOVE_SPACE_THREAT);
 			p_threat->set_x_pos(i * 505 + 500);
 			p_threat->set_y_pos(200);
+			p_threat->set_max_blood(2);
+			p_threat->set_blood(2);
 
 			int pos1 = p_threat->get_x_pos() - 100;
 			int pos2 = p_threat->get_x_pos() + 100;
@@ -193,6 +199,8 @@ std::vector<ThreatsObject*> MakeThreatsList()
 			p_threat->set_y_pos(250);
 			p_threat->set_type_move(ThreatsObject::STATIC_THREAT);
 			p_threat->set_input_left(0);
+			p_threat->set_max_blood(2);
+			p_threat->set_blood(2);
 
 			BulletObject* p_bullet = new BulletObject();
 			p_threat->InitBullet(p_bullet, g_screen);
@@ -434,7 +442,7 @@ int main(int argc, char* argv[])
 			quit_button.SetText("QUIT");
 
 			continue_button.LoadFromRenderText(font_menu, g_screen);
-			if (mouseX >= 1280 / 2 - 50 && mouseX <= 1280 / 2 - 40 + 130 && mouseY >= 480 / 2 +40 && mouseY <= 480 / 2 + 37 + 40) {
+			if (mouseX >= 1280 / 2 - 80 && mouseX <= 1280 / 2 - 40 + 130 && mouseY >= 480 / 2 +40 && mouseY <= 480 / 2 + 37 + 40) {
 				continue_button.SetColor(TextObject::YELLOW_TEXT);
 				if (g_event.type == SDL_MOUSEBUTTONDOWN) {
 					if (g_event.button.button == SDL_BUTTON_LEFT)
@@ -449,7 +457,7 @@ int main(int argc, char* argv[])
 
 				continue_button.SetColor(TextObject::RED_TEXT);
 			}
-			continue_button.RenderText(g_screen, 1280 / 2 - 60, 480 /2 + 50);
+			continue_button.RenderText(g_screen, 1280 / 2 - 80, 480 /2 + 50);
 			high_score.LoadFromRenderText(font_menu, g_screen);
 			if (mouseX >= 1280 / 2 - 100 && mouseX <= 1280 / 2 - 40 + 300 && mouseY >= 480 / 2 && mouseY <= 480 / 2 + 37) {
 				high_score.SetColor(TextObject::YELLOW_TEXT);
@@ -506,6 +514,8 @@ int main(int argc, char* argv[])
 				p_threat->get_player_rect(p_player.GetRect());
 				p_threat->MakeBullet(g_screen, SCREEN_WIDTH, SCREEN_HEIGHT);
 				p_threat->Show(g_screen);
+				if (p_threat->get_blood() > 0)
+					p_threat->Show_blood(g_screen);
 
 				SDL_Rect rect_player = p_player.GetRectFrame();
 				bool bCol1 = false;
@@ -603,7 +613,8 @@ int main(int argc, char* argv[])
 				p_threat->get_player_rect(p_player.GetRect());
 				p_threat->MakeBullet(g_screen, SCREEN_WIDTH, SCREEN_HEIGHT);
 				p_threat->Show(g_screen);
-
+				if (p_threat->get_blood() > 0)
+					p_threat->Show_blood(g_screen);
 				SDL_Rect rect_player = p_player.GetRectFrame();
 				bool bCol1 = false;
 
@@ -661,14 +672,14 @@ int main(int argc, char* argv[])
 				}
 				for (int t = 0; t < fly_list.size(); t++)
 				{
-					FlyObject* obj_threat = fly_list.at(t);
-					if (obj_threat != NULL)
+					FlyObject* ob_threat = fly_list.at(t);
+					if (ob_threat != NULL)
 					{
 						SDL_Rect tRect;
-						tRect.x = obj_threat->GetRect().x;
-						tRect.y = obj_threat->GetRect().y;
-						tRect.w = obj_threat->get_width_frame();
-						tRect.h = obj_threat->get_height_frame();
+						tRect.x = ob_threat->GetRect().x;
+						tRect.y = ob_threat->GetRect().y;
+						tRect.w = ob_threat->get_width_frame();
+						tRect.h = ob_threat->get_height_frame();
 
 						SDL_Rect bRect = p_bullet->GetRect();
 
@@ -685,10 +696,27 @@ int main(int argc, char* argv[])
 								exp_threat.SetRect(x_pos, y_pos);
 								exp_threat.Show(g_screen);
 							}
-							p_player.RemoveBullet(r);
-							obj_threat->Free();
-							fly_list.erase(fly_list.begin() + t);
-							Mix_PlayChannel(-1, g_sound_exp[1], 0);
+							if (ob_threat->get_blood() > 1) {
+								if (p_bullet->get_type_bullet() == 2) {
+									ob_threat->set_blood(0);
+									p_player.RemoveBullet(r);
+									ob_threat->Free();
+									fly_list.erase(fly_list.begin() + t);
+									Mix_PlayChannel(-1, g_sound_exp[1], 0);
+								}
+								else {
+									ob_threat->set_blood(ob_threat->get_blood() - 1);
+									p_player.RemoveBullet(r);
+								}
+								Mix_PlayChannel(-1, g_sound_exp[3], 0);
+
+							}
+							else
+							{
+								ob_threat->Free();
+								fly_list.erase(fly_list.begin() + t);
+								Mix_PlayChannel(-1, g_sound_exp[1], 0);
+							}
 
 						}
 					}
@@ -699,9 +727,10 @@ int main(int argc, char* argv[])
 		std::vector<BulletObject*> bullet_arr = p_player.get_bullet_list();
 		for (int r = 0; r < bullet_arr.size(); r++) {
 			BulletObject* p_bullet = bullet_arr.at(r);
+			
 			if (p_bullet != NULL)
 			{
-
+				
 				p_bullet->CheckToMap(map_data);
 				if (p_bullet->get_is_move() == false)
 				{
@@ -734,10 +763,29 @@ int main(int argc, char* argv[])
 								exp_threat.SetRect(x_pos, y_pos);
 								exp_threat.Show(g_screen);
 							}
-							p_player.RemoveBullet(r);
-							obj_threat->Free();
-							threats_list.erase(threats_list.begin() + t);
-							Mix_PlayChannel(-1, g_sound_exp[1], 0);
+							
+							if (obj_threat->get_blood() > 1) {	
+								if (p_bullet->get_type_bullet() == 2) {
+									obj_threat->set_blood(0);
+									p_player.RemoveBullet(r);
+									obj_threat->Free();
+									threats_list.erase(threats_list.begin() + t);
+									Mix_PlayChannel(-1, g_sound_exp[1], 0);
+								}
+								else {
+									obj_threat->set_blood(obj_threat->get_blood() - 1);
+									p_player.RemoveBullet(r);
+								}
+								obj_threat->set_attack(1);
+								Mix_PlayChannel(-1, g_sound_exp[4], 0);
+							
+							}
+							else
+							{
+								obj_threat->Free();
+								threats_list.erase(threats_list.begin() + t);
+								Mix_PlayChannel(-1, g_sound_exp[1], 0);
+							}
 
 						}
 					}
@@ -815,10 +863,10 @@ int main(int argc, char* argv[])
 			for (int i = 1; i <= heal; i++)
 			{
 				
-				int x = 10 + i * 30; // Vị trí x trên cửa sổ
-				int y = 30; // Vị trí y trên cửa sổ
-				int width = 30; // Chiều rộng của texture
-				int height = 30; // Chiều cao của texture
+				int x = 10 + i * 30; 
+				int y = 30; 
+				int width = 30; 
+				int height = 30; 
 				SDL_Rect dstrect = { x, y, width, height };
 				SDL_RenderCopy(g_screen, mau, NULL, &dstrect);
 			}
@@ -826,10 +874,10 @@ int main(int argc, char* argv[])
 
 		//tiền
 		
-		int x = 40; // Vị trí x trên cửa sổ
-		int y = 7; // Vị trí y trên cửa sổ
-		int width = 30; // Chiều rộng của texture
-		int height = 30; // Chiều cao của texture
+		int x = 40; 
+		int y = 7; 
+		int width = 30; 
+		int height = 30; 
 		SDL_Rect dstrect = { x, y, width, height };
 		SDL_RenderCopy(g_screen, tien, NULL, &dstrect);
 
@@ -859,7 +907,6 @@ int main(int argc, char* argv[])
 		{
 			w_menu = true;
 			score = money_count + 200 - time_val + heal * 10;
-			std::cout << score << " ";
 			updateHighScore(score);
 			while (w_menu)
 			{

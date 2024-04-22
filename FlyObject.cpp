@@ -212,3 +212,22 @@ void FlyObject::MakeBullet(SDL_Renderer* screen, const int& x_limit, const int& 
 		}
 	}
 }
+void FlyObject::Show_blood(SDL_Renderer* des)
+{
+	SDL_Rect r;
+	r.x = rect_.x + 6;
+	r.y = rect_.y - 5;
+	r.w = 70 / (max_blood)*blood;
+	r.h = 10;
+
+	SDL_SetRenderDrawColor(des, 255, 0, 0, 255);
+	SDL_RenderFillRect(des, &r);
+	SDL_Rect rr;
+	rr.x = rect_.x + 6 + r.w;
+	rr.y = rect_.y - 5;
+	rr.w = 70 - r.w;
+	rr.h = 10;
+
+	SDL_SetRenderDrawColor(des, 100, 100, 100, 255);
+	SDL_RenderFillRect(des, &rr);
+}

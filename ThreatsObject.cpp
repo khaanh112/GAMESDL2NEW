@@ -216,6 +216,7 @@ void ThreatsObject::CheckToMap(Map& map_data)
 					x_pos_ = x2 * TILE_SIZE;
 					x_pos_ -= width_frame_ + 1;
 					x_val_ = 0;
+
 				}
 			
 
@@ -311,10 +312,10 @@ void ThreatsObject::ImpMoveType(SDL_Renderer* screen)
 		if (on_ground_ == true)
 		{
 			SDL_Rect main_object_position = player;
-
-			if (rect_.x >= 0 && abs(rect_.x - main_object_position.x) < 700)
+			if (attacked == 1 || abs(main_object_position.x - rect_.x) < 200)
 			{
-
+				
+				//std::cout <<first_pos1<<" " <<x_pos_ << " "<<first_pos2;
 				if (main_object_position.x < rect_.x)
 				{
 					SetAnimationPos(main_object_position.x, rect_.x);
@@ -414,4 +415,23 @@ void ThreatsObject::MakeBullet(SDL_Renderer* screen, const int& x_limit, const i
 			}
 		}
 	}
+}
+void ThreatsObject::Show_blood(SDL_Renderer* des)
+{
+	SDL_Rect r;
+	r.x = rect_.x + 6;
+	r.y = rect_.y - 5;
+	r.w = 50 / (max_blood)*blood;
+	r.h = 5;
+
+	SDL_SetRenderDrawColor(des, 255, 0, 0, 255);
+	SDL_RenderFillRect(des, &r);
+	SDL_Rect rr;
+	rr.x = rect_.x + 6 + r.w;
+	rr.y = rect_.y - 5;
+	rr.w = 50 - r.w;
+	rr.h = 5;
+
+	SDL_SetRenderDrawColor(des, 100, 100, 100, 255);
+	SDL_RenderFillRect(des, &rr);
 }

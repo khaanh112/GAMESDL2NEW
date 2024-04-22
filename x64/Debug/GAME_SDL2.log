@@ -8,17 +8,17 @@ C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\CommonFunc.h(68,2): warning C4091: 'type
 C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\MainObject.h(52,33): warning C4244: 'return': conversion from 'const float' to 'int', possible loss of data
   (compiling source file 'main.cpp')
   
-C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(149,33): warning C4244: 'argument': conversion from 'int' to 'const float', possible loss of data
-C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(172,32): warning C4244: 'argument': conversion from 'int' to 'const float', possible loss of data
-C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(175,13): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(176,13): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(192,33): warning C4244: 'argument': conversion from 'int' to 'const float', possible loss of data
-C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(528,19): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(529,19): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(625,19): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(626,19): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(681,19): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(682,19): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(730,19): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(731,19): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(151,33): warning C4244: 'argument': conversion from 'int' to 'const float', possible loss of data
+C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(176,32): warning C4244: 'argument': conversion from 'int' to 'const float', possible loss of data
+C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(181,13): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(182,13): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(198,33): warning C4244: 'argument': conversion from 'int' to 'const float', possible loss of data
+C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(538,19): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(539,19): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(636,19): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(637,19): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(692,19): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(693,19): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(759,19): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\PC\Desktop\GAME_SDL2\GAME_SDL2\main.cpp(760,19): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
   GAME_SDL2.vcxproj -> C:\Users\PC\Desktop\GAME_SDL2\x64\Debug\GAME_SDL2.exe

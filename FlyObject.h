@@ -44,6 +44,11 @@ public:
 	void get_player_rect(const SDL_Rect& pl) { player = pl; }
 	void RemoveBullet(const int& idx);
 	void SetBulletRect(const int& idx);
+
+	void set_max_blood(const int& m_bl) { max_blood = m_bl; }
+	void set_blood(const int& bl) {blood = bl;}
+	int get_blood() const { return blood; }
+	void Show_blood(SDL_Renderer* des);
 private:
 	int map_x_;
 	int map_y_;
@@ -62,6 +67,9 @@ private:
 
 	std::vector<BulletObject*> bullet_list_;
 	SDL_Rect player;
+
+	int blood;
+	int max_blood;
 
 };
 #endif

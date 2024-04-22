@@ -53,7 +53,7 @@ public:
 	void IncreaseHealth();
 	void DecreaseHealth();
 	void DecreaseMoney();
-
+	
 
 private:
 	int money_count;
@@ -79,7 +79,6 @@ private:
 	int map_y_;
 
 	int come_back_time_;
-
 	int stt;
 
 

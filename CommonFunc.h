@@ -16,7 +16,7 @@ static SDL_Renderer* g_screen = NULL;
 static SDL_Event g_event;
 
 static Mix_Chunk* g_sound_bullet[2];
-static Mix_Chunk* g_sound_exp[2];
+static Mix_Chunk* g_sound_exp[3];
 // Screen
 
 

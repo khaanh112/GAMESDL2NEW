@@ -170,7 +170,6 @@ void MainObject::HandleInputAction(SDL_Event events, SDL_Renderer* screen, Mix_C
 
 		// Cài đặt hướng di chuyển của viên đạn dựa trên vị trí hiện tại của chuột
 
-		// Tạo viên đạn mới
 		BulletObject* p_bullet = new BulletObject();
 
 		if (events.button.button == SDL_BUTTON_LEFT) {
@@ -315,7 +314,7 @@ void MainObject::RemoveBullet(const int& idx)
 }
 
 
-void MainObject::DoPlayer(Map& map_data, Mix_Chunk* exp_sound[2])
+void MainObject::DoPlayer(Map& map_data, Mix_Chunk* exp_sound[3])
 {
 	
 	if (come_back_time_ == 0)
